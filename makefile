@@ -22,5 +22,5 @@ help:
 # Tnt:
 	  # script to calculate # of lines and decide how many CPU is needed
 	  # run it
-# Sourcom:
+# Compa:
 	#
