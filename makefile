@@ -14,14 +14,14 @@ all:
 
 help:
 	echo "OPTIONS $LOGNAME"
-		# Display all options
+	# Display all options
 
 # QC:
-		# Trimmomatic
-		# Normalize
-		# the other script
+	# Trimmomatic
+	# Normalize
+	# the other script
 # Tnt:
-	  # script to calculate # of lines and decide how many CPU is needed
-	  # run it
+	# script to calculate # of lines and decide how many CPU is needed
+	# run it
 # Sourcom:
 	#
