@@ -10,9 +10,18 @@
 #                                                                                        #
 ##########################################################################################
 all:
-	echo "Hello {$LOGNAME} try make help"
+	echo "Hello ($USER) try make help"
 
 help:
 	echo "OPTIONS $LOGNAME"
+		# Display all options
 
 # QC:
+		# Trimmomatic
+		# Normalize
+		# the other script
+# Tnt:
+	  # script to calculate # of lines and decide how many CPU is needed
+	  # run it
+# Sourcom:
+	#
