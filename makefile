@@ -12,14 +12,16 @@
 # Then utilize the command: "make" to run the desired operation.               #
 ################################################################################
 # Flags
-foo = $PATH
+PATH = $PATH
+SHELL := /bin/bash
 # Non-working variables :'(
-cpu ?= $($CPUTYPE)
-ifeq ($(origin cpu), undefined)
-cpu = $CPUTYPE
-@echo "$cpu"
-os ?= $($OSTYPE)
-endif
+CPU ?= $(shell $CPUTYPE)
+OS ?= $(shell $OSTYPE)
+# ifeq ($(origin cpu), undefined)
+# cpu = $CPUTYPE
+# @echo "$cpu"
+# os ?= $($OSTYPE)
+# endif
 
 # Make all targets
 all: QualityControl Trinity Comparison clean
@@ -29,22 +31,28 @@ all: QualityControl Trinity Comparison clean
 # Testing area:
 # Currently testing:
 #		Variable expansion in makefile to figure out cpu arquitecture and operating system.
-PHONY: $(cpu) $(os)
+PHONY: specs $(CPU) $(OS)
 	@echo "Currently making the $@ recipee."
 	@echo "$(CPUTYPE)"
-	@echo $(value cpu)
+	@echo $(value CPU)
 	@echo $(os)
-	@echo $(value os)
+	@echo $(value OS)
+
+# LIST = one two three
+# for i in $(LIST); do \
+# 	echo $$i; \
+# done
 
 # Non-working computer specs recipee
-specs:
+specs: $(CPU) $(OS)
 	@echo "Currently making the $@ recipee."
-	@echo "You are utilizing a $(shell $CPUTYPE) with an $(shell $OSTYPE) derivate.\n"
-	ifeq ($(os), "linux_gnu")
+	@echo "You are utilizing a $(CPU) with an $(OS) derivate.\n"
+	ifeq ($($OSTYPE), "linux_gnu")
 		@echo "YEY! :P"
 	else
 		@echo "nope :'("
 	endif
+
 # Choose preffered style help vs help2
 help:
 	@echo "Currently making the $@ recipee."
@@ -81,15 +89,22 @@ QualityControl:
 # 	Normalize
 # 	the other script
 
-Trinity:
-	@echo "Currently making the $@ recipee."
 # 	script to calculate # of lines and decide how many CPU is needed
 # 	run it
+# LIST = $(shell lscpu)
+# for i in $(LIST);
+#		do echo "\t $$i \n";
+# done
+Trinity:
+	@echo "Currently making the $@ recipee."
+	@echo $(shell lscpu)
 
 Comparison:
 	@echo "Currently making the $@ recipee."
 	@echo "Looking for fata files:"
 	@find -O3 . -name "*.fasta"
+	@find -O3 . -name "*.fa"
+	@find -O3 . -name "*.seq"
 
 clean:
 	@echo "Currently making the $@ recipee."
