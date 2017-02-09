@@ -12,7 +12,7 @@
 # Then utilize the command: "make" to run the desired operation.               #
 # ###############################################################################
 #
-#
+# aim for ~1G RAM per ~1M ~76 base
 
 
 
@@ -63,3 +63,9 @@ f=open("out.txt","w+")
 f.write(str(i)+"\n")
 x= open("dic.txt", "w+")
 x.write(str(contig_dict)+"\n")
+
+GB = open("GBneeded.txt", "w+")
+# gb = i / (1000000 * 25) for when 25 bases kmers
+gb = i /(1000000 * 76)
+gb = round(gb,0)
+GB.write(str(gb)+"\n")
