@@ -12,19 +12,14 @@
 # Then utilize the command: "make" to run the desired operation.               #
 ################################################################################
 # Flags
-PATH:=$PATH
 SHELL:=/bin/bash
-# Non-working variables :'(
-CPU=$(shell lscpu)
-OS=$($OSTYPE)
-# ifeq ($(origin cpu), undefined)
-# cpu = $CPUTYPE
-# @echo "$cpu"
-# os ?= $($OSTYPE)
-# endif
+# Working variables :)
+CPU=$(grep -c processor /proc/cpuinfo)
+MEM=$(free available -h | grep "Mem:" | awk '{ print $3 }')
+
 
 # Make all targets
-all: QualityControl Trinity Comparison clean
+all: QualityControl Trinity Comparison clean specs
 	@echo "Currently making the $@ recipee."
 	@echo "Hello $(USER), if unsure how to run this file try make help for specific options."
 
@@ -33,25 +28,13 @@ all: QualityControl Trinity Comparison clean
 #		Variable expansion in makefile to figure out cpu arquitecture and operating system.
 PHONY:
 	@echo "Currently making the $@ recipee."
-	@echo $CPU
-	@echo $(value CPU)
-	@echo $(OS)
-	@echo $(value OS)
-
-# LIST = one two three
-# for i in $(LIST); do \
-# 	echo $$i; \
-# done
+	@echo "Cpu: " $(value CPU)
+	@echo "Mem: " $(value MEM)
 
 # Non-working computer specs recipee
-specs: $(CPU) $(OS)
+specs:
 	@echo "Currently making the $@ recipee."
-	@echo "You are utilizing a $(CPU) with an $(OS) derivate.\n"
-	ifeq ($OS == "linux_gnu")
-		@echo "YEY! :P"
-	else
-		@echo "nope :'("
-	endif
+	@echo "You have $(value CPU) available cores and $(value MEM) of RAM.\n"
 
 # Choose preffered style help vs help2
 help:
@@ -95,9 +78,28 @@ QualityControl:
 # for i in $(LIST);
 #		do echo "\t $$i \n";
 # done
-Trinity:
+CALCCPU=5
+CALCMEM=3
+Trinity: specs
 	@echo "Currently making the $@ recipee."
-	@echo $(shell lscpu)
+	ifeq ($(CPU), $(CALCCPU))
+		CPUARGS:= CALCCPU
+	else
+		CPUARGS:= CPU
+	endif
+	@echo CPUARGS
+ifeq ($CPU==$CALCMEM )
+	MEMARGS:= CALCRAM
+else
+	MEMARGS:= MEM
+endif
+	@echo CPUARGS
+
+# All fasta and fastq files
+	# LIST = one two three
+	# for i in $(LIST); do \
+	# 	echo $$i; \
+	# done
 
 Comparison:
 	@echo "Currently making the $@ recipee."
