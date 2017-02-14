@@ -12,11 +12,11 @@
 # Then utilize the command: "make" to run the desired operation.               #
 ################################################################################
 # Flags
-PATH = $PATH
-SHELL := /bin/bash
+PATH:=$PATH
+SHELL:=/bin/bash
 # Non-working variables :'(
-CPU ?= $(shell $CPUTYPE)
-OS ?= $(shell $OSTYPE)
+CPU=$(shell lscpu)
+OS=$($OSTYPE)
 # ifeq ($(origin cpu), undefined)
 # cpu = $CPUTYPE
 # @echo "$cpu"
@@ -31,11 +31,11 @@ all: QualityControl Trinity Comparison clean
 # Testing area:
 # Currently testing:
 #		Variable expansion in makefile to figure out cpu arquitecture and operating system.
-PHONY: specs $(CPU) $(OS)
+PHONY:
 	@echo "Currently making the $@ recipee."
-	@echo "$(CPUTYPE)"
+	@echo $CPU
 	@echo $(value CPU)
-	@echo $(os)
+	@echo $(OS)
 	@echo $(value OS)
 
 # LIST = one two three
@@ -47,7 +47,7 @@ PHONY: specs $(CPU) $(OS)
 specs: $(CPU) $(OS)
 	@echo "Currently making the $@ recipee."
 	@echo "You are utilizing a $(CPU) with an $(OS) derivate.\n"
-	ifeq ($($OSTYPE), "linux_gnu")
+	ifeq ($OS == "linux_gnu")
 		@echo "YEY! :P"
 	else
 		@echo "nope :'("

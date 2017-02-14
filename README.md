@@ -7,6 +7,14 @@ Wechangethenamelater
 
   PS. As suggested by the name we are hoping to change the name of this repo later.
 
+# Dependencies:
+  + [Biopython](https://github.com/biopython/biopython)
+    + Quick install:
+      ```python
+      pip install numpy
+      pip install biopython
+      ```
+
 ## Components:
   + Trimmomatic
   + khmer
